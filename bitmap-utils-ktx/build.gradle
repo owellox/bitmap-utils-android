@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 29
@@ -19,7 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -30,4 +35,33 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+ext {
+    bintrayRepo = 'bitmap-utils-android'
+    bintrayName = 'com.owellox.android.bitmap'
+    libraryName = 'bitmap-utils-ktx'
+
+    publishedGroupId = 'com.owellox.android.bitmap'
+    artifact = 'bitmap-utils-ktx'
+    libraryVersion = '0.1.0'
+
+    libraryDescription = ''
+    siteUrl = 'https://github.com/owellox/bitmap-utils-android'
+    gitUrl = 'https://github.com/owellox/bitmap-utils-android.git'
+    developerId = 'owellox'
+    developerName = 'Owellox'
+    developerEmail = 'owellox@gmail.com'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'https://apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+repositories {
+    mavenCentral()
+}
+
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 }
