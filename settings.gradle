@@ -1,0 +1,2 @@
+include ':app', ':bitmap-utils-ktx'
+rootProject.name='Bitmap Utils'
