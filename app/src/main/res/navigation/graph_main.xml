@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_main"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.owellox.android.bitmap.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/home">
+        <action
+            android:id="@+id/action_home_to_view_bitmap"
+            app:destination="@id/view_bitmap"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/view_bitmap"
+        android:name="com.owellox.android.bitmap.ViewBitmapFragment"
+        android:label="ViewBitmapFragment"
+        tools:layout="@layout/view_bitmap" >
+        <argument
+            android:name="imageUri"
+            app:argType="android.net.Uri" />
+    </fragment>
+</navigation>
