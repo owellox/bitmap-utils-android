@@ -1,7 +1,12 @@
 package com.owellox.bitmap
 
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import androidx.core.graphics.scale
+import androidx.exifinterface.media.ExifInterface
+import java.io.File
+import java.io.FileDescriptor
+import java.io.InputStream
 import kotlin.math.min
 
 /**
@@ -26,4 +31,88 @@ fun Bitmap.cropCenterSquare(sideLength: Int? = null, filter: Boolean = true): Bi
         bitmap = bitmap.scale(sideLength, sideLength, filter)
     }
     return bitmap
+}
+
+/**
+ * Fixes the orientation of this Bitmap by reading EXIF values from the [file]. If it is
+ * found to not requiring any reorientation, then the source Bitmap is returned.
+ *
+ * @param file The source file of the Bitmap.
+ * @return The reoriented Bitmap, or the source Bitmap if there's no reorientation required.
+ */
+fun Bitmap.fixOrientation(file: File): Bitmap {
+    val exif = ExifInterface(file)
+    val swapDimension =
+        when (exif.rotationDegrees) {
+            0 -> return this
+            90 -> true
+            180 -> false
+            270 -> true
+            else -> return this
+        }
+    val matrix = Matrix()
+    matrix.postRotate(exif.rotationDegrees.toFloat())
+    return Bitmap.createBitmap(
+        this,
+        0, 0,
+        if (!swapDimension) width else height,
+        if (!swapDimension) height else width,
+        matrix, true
+    )
+}
+
+/**
+ * Fixes the orientation of this Bitmap by reading EXIF values from the [fileDescriptor]. If it is
+ * found to not requiring any reorientation, then the source Bitmap is returned.
+ *
+ * @param fileDescriptor The source file-descriptor of the Bitmap.
+ * @return The reoriented Bitmap, or the source Bitmap if there's no reorientation required.
+ */
+fun Bitmap.fixOrientation(fileDescriptor: FileDescriptor): Bitmap {
+    val exif = ExifInterface(fileDescriptor)
+    val swapDimension =
+        when (exif.rotationDegrees) {
+            0 -> return this
+            90 -> true
+            180 -> false
+            270 -> true
+            else -> return this
+        }
+    val matrix = Matrix()
+    matrix.postRotate(exif.rotationDegrees.toFloat())
+    return Bitmap.createBitmap(
+        this,
+        0, 0,
+        if (!swapDimension) width else height,
+        if (!swapDimension) height else width,
+        matrix, true
+    )
+}
+
+/**
+ * Fixes the orientation of this Bitmap by reading EXIF values from the [inputStream]. If it is
+ * found to not requiring any reorientation, then the source Bitmap is returned.
+ *
+ * @param inputStream The source input-stream of the Bitmap.
+ * @return The reoriented Bitmap, or the source Bitmap if there's no reorientation required.
+ */
+fun Bitmap.fixOrientation(inputStream: InputStream): Bitmap {
+    val exif = ExifInterface(inputStream)
+    val swapDimension =
+        when (exif.rotationDegrees) {
+            0 -> return this
+            90 -> true
+            180 -> false
+            270 -> true
+            else -> return this
+        }
+    val matrix = Matrix()
+    matrix.postRotate(exif.rotationDegrees.toFloat())
+    return Bitmap.createBitmap(
+        this,
+        0, 0,
+        if (!swapDimension) width else height,
+        if (!swapDimension) height else width,
+        matrix, true
+    )
 }
