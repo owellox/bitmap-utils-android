@@ -11,7 +11,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName '1.0.0-alpha.1'
+        versionName '1.0.0-alpha.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -47,7 +47,7 @@ ext {
 
     publishedGroupId = 'com.owellox.android.bitmap'
     artifact = 'bitmap-utils-ktx'
-    libraryVersion = '1.0.0-alpha.1'
+    libraryVersion = '1.0.0-alpha.2'
 
     libraryDescription = ''
     siteUrl = 'https://github.com/owellox/bitmap-utils-android'
